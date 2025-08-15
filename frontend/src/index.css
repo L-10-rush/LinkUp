@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @plugin "daisyui" {
+  themes: all;
+} */
+/* @plugin "daisyui/theme" {
+  name: "retro";
+  default: true;
+  --color-primary: blue;
+  --color-secondary: teal;
+} */
+
+
+/* @import "tailwindcss" source(none);
+@source "./public/*.{html,js}";
+@plugin "daisyui"; */
