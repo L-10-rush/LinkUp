@@ -1,30 +1,63 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js"
-import dotenv from 'dotenv'
 
-dotenv.config();
-export const protectRoute = async(req,res,next) =>{
-    try{
-        const token = req.cookies.jwt;
-        if(!token) {
-            return res.status(401).json({message:"Unauthorized-NO token Provided" });
-        }
+export const protectRoute = async (req, res, next) => {
+	try {
+		const token = req.cookies.jwt;
+		if (!token) {
+			return res.status(401).json({ message: "Unauthorized - No Token Provided" });
+		}
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        if (!decoded) {
-            return  res.status(401).json({message: "Unauthorized-Invalid Token"} );
-        }
-        const user = await User.findById(decoded.userId).select("-password");
-        if (!user){
-            return res.status(404).json( {message: "User not found"} );
-        }
-        req.user = user;
+		// This will throw an error if the token is invalid, which is caught below
+		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+		// The 'if (!decoded)' check has been removed as it is unreachable.
+
+		const user = await User.findById(decoded.userId).select("-password");
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		req.user = user;
+		next();
+	} catch (error) {
+		console.log("Error in protectRoute middleware: ", error.message);
+
+		// Specifically check for token errors to send a 401 status
+		if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+			return res.status(401).json({ message: "Unauthorized - Invalid Token" });
+		}
+		
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+};
+
+
+// import dotenv from 'dotenv'
+
+// dotenv.config();
+// export const protectRoute = async(req,res,next) =>{
+//     try{
+//         const token = req.cookies.jwt;
+//         if(!token) {
+//             return res.status(401).json({message:"Unauthorized-NO token Provided" });
+//         }
+
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//         if (!decoded) {
+//             return  res.status(401).json({message: "Unauthorized-Invalid Token"} );
+//         }
+//         const user = await User.findById(decoded.userId).select("-password");
+//         if (!user){
+//             return res.status(404).json( {message: "User not found"} );
+//         }
+//         req.user = user;
         
-        next()
+//         next()
 
-    }catch(error){
-        console.log("Error in protectRoute middleware: ", error.message);
-        res.status(500).json({ message: "Internal Server Error "});
+//     }catch(error){
+//         console.log("Error in protectRoute middleware: ", error.message);
+//         res.status(500).json({ message: "Internal Server Error "});
         
-    }
-}
+//     }
+// }
