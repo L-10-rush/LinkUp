@@ -1,3 +1,10 @@
+
+
+## TODO: 
+- Need to add implementation for the message hashing funtion
+- Add the deploy version in the release 
+
+
 # LinkUp: Real-time Chat Application
 
 Welcome to LinkUp, a modern, full-stack real-time chat application designed for seamless communication. This project demonstrates a robust architecture featuring a Node.js/Express backend, a React frontend, MongoDB for data persistence, and Socket.IO for instant messaging. Connect with friends, send messages, and share media in a secure and intuitive environment. 💬🚀
