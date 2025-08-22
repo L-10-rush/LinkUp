@@ -311,10 +311,8 @@ This section provides a detailed breakdown of the LinkUp backend API, following 
 
 ## ✒️ Author Info
 
-*   **Your Name:** [Your Name Here]
-*   **LinkedIn:** [Your LinkedIn Profile URL]
-*   **Portfolio:** [Your Portfolio Website URL]
-*   **Email:** [Your Email Address]
+*   **Your Name:** [K1ngM0nk]
+*   **Email:** [mondalaniket2005@gmail.com]
 
 ## 🏅 Badges
 
